@@ -1,0 +1,23 @@
+#!/usr/bin/python
+# Uploads a SIS Integration file (specified on command line) to the designated SIS Integration endpoint (in this case: course/store) 
+import os
+import sys
+import requests
+SAAS_endpt = 'https://yourblackboardinstance.edu/webapps/bb-data-integration-flatfile-BBBBBBBBBBBBB/endpoint/course/store'
+SAAS_uname = 'XXXXXX-XXXX-1234-XXXXX-XXXXXXX'
+SAAS_pwd = 'yourPWDhere'
+
+endpt = SAAS_endpt
+uname = SAAS_uname
+pwd = SAAS_pwd
+
+sisfile = sys.argv[1]
+sisdata = open(sisfile, 'rb')
+
+req = requests.post( endpt, data=sisdata, auth=(uname, pwd), verify=False )
+print req.status_code
+print req.text
+
+# close the temp SIS datafile  and close http requests connection
+sisdata.close()
+req.close()
